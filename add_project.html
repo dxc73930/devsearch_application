@@ -1,0 +1,53 @@
+{% extends 'home.html' %}
+
+{% block title %}Add Project - DevSearch{% endblock %}
+
+{% block content %}
+    <div class="auth-container">
+        <h2>Add New Project</h2>
+        {% if error %}
+            <p class="error-message">{{ error }}</p>
+        {% endif %}
+        <form method="POST" action="{{ url_for('add_project') }}" enctype="multipart/form-data">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+            <div class="form-group">
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <textarea id="description" name="description"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="demo_link">Demo Link (Optional):</label>
+                <input type="url" id="demo_link" name="demo_link">
+            </div>
+            <div class="form-group">
+                <label for="source_link">Source Link (Optional):</label>
+                <input type="url" id="source_link" name="source_link">
+            </div>
+            <div class="form-group">
+                <label for="tags-input">Tags (Optional):</label>
+                <input type="text" id="tags-input" name="tags-input" placeholder="Enter tags and press Enter">
+                <div id="tags-container">
+                    {% if project_tags %}
+                        {% for tag in project_tags %}
+                            <span class="tag-chip">{{ tag.name }}
+                                <input type="hidden" name="tags" value="{{ tag.tag_id }}">
+                                <span class="delete-tag" data-tag-id="{{ tag.tag_id }}">✕</span>
+                            </span>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <small>Press Enter to add tags.</small>
+            </div>
+            <div class="form-group">
+                <label for="featured_image">Featured Image (Optional):</label>
+                <input type="file" id="featured_image" name="featured_image">
+                <small>Allowed file types: png, jpg, jpeg, gif</small>
+            </div>
+            <button type="submit" class="button primary">Add Project</button>
+            <p><a href="{{ url_for('projects') }}">Back to Projects</a></p>
+        </form>
+    </div>
+{% endblock %}

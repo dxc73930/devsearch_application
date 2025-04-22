@@ -1,0 +1,32 @@
+{% extends 'home.html' %}
+
+
+{% block content %}
+    <div class="auth-container">
+        <h2>Sign Up</h2>
+        <form method="POST" action="{{ url_for('signup') }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="form-group">
+                <label for="confirm_password">Confirm Password:</label>
+                <input type="password" id="confirm_password" name="confirm_password" required>
+            </div>
+            <button type="submit" class="button secondary">Register</button>
+        </form>
+        <div class="separator">
+            <span>Already have an account?</span>
+        </div>
+        <p><a href="{{ url_for('login') }}" class="button primary">Log In</a></p>
+    </div>
+{% endblock %}

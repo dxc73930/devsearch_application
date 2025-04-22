@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}DevSearch{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</head>
+<body>
+
+    <header>
+        <div class="nav-links">
+        <h1><a href="{{url_for('home')}}">DevSearch</a></h1>
+        <nav>
+
+            {% if not session.get('user_id') %}
+                <a href="{{ url_for('login') }}">Login/SignUp</a>
+            {% else %}
+                <a href="{{url_for('profile')}}">Profile</a>
+                <a href="{{url_for('projects')}}">Projects</a>
+                <a href="{{ url_for('signout')}}">Sign Out</a>
+            {% endif %}
+        </nav>
+        </div>
+    </header>
+
+<main>
+
+     {% block content %}
+    {% endblock %}
+</main>
+
+
+
+</body>
+</html>

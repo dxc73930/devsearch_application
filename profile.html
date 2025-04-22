@@ -1,0 +1,42 @@
+{% extends 'home.html' %}
+
+{% block title %}Profile - DevSearch{% endblock %}
+
+{% block content %}
+    <div class="profile-container">
+        <h2>Your Profile</h2>
+        {% if user %}
+            <div class="profile-info">
+                <p><strong>Username:</strong> <span class="profile-data">{{ user.username }}</span></p>
+                <p><strong>Email:</strong> <span class="profile-data">{{ user.email }}</span></p>
+                {% if user.bio %}
+                    <div class="profile-field">
+                        <strong>Bio:</strong>
+                        <p class="profile-data bio-text">{{ user.bio }}</p>
+                    </div>
+                {% else %}
+                    <p><strong>Bio:</strong> <span class="profile-data not-available">Not available.</span></p>
+                {% endif %}
+                {% if user.location %}
+                    <p><strong>Location:</strong> <span class="profile-data">{{ user.location }}</span></p>
+                {% else %}
+                    <p><strong>Location:</strong> <span class="profile-data not-available">Not available.</span></p>
+                {% endif %}
+                 {% if user_skills %}
+    <p><strong>Skills:</strong>
+        {% for skill in user_skills %}
+            <span class="profile-data">{{ skill.name }}{% if not loop.last %}, {% endif %}</span>
+        {% endfor %}
+    </p>
+{% else %}
+    <p><strong>Skills:</strong> <span class="not-available">No skills added yet.</span></p>
+{% endif %}
+            </div>
+            <div class="profile-actions">
+                <a href="{{ url_for('edit_profile') }}" class="button primary">Edit Profile</a>
+            </div>
+        {% else %}
+            <p class="error-message">Error: Could not load user profile.</p>
+        {% endif %}
+    </div>
+{% endblock %}

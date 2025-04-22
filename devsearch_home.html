@@ -1,0 +1,58 @@
+
+{% extends 'home.html' %}
+{% block content %}
+
+<div class="home-page">
+     <section class="hero-section text-center">
+        <div class="container container--narrow">
+            <div class="hero-section__box">
+                <h2> <span>Find Developer Projects</span></h2>
+                <form id="searchForm" class="search" method="GET" action="/">
+                    <div class="search__field">
+                        <label for="search" class="sr-only">Search Projects:</label>
+                        <input class="input input--text" id="search" type="text" name="q" placeholder="Search by title, description, or tags..." value="{{ query if query }}">
+                    </div>
+                    <input class="button small" type="submit" value="Search">
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <section class="projectsList">
+        <div class="container">
+            <h2>{% if query %}Search Results for: <span>{{ query }}</span>{% else %}Latest Projects{% endif %}</h2>
+            {% if latest_projects %}
+            <div class="grid grid--three">
+                {% for project in latest_projects %}
+                <div class="column">
+                    <div class="card project-card">
+                        <a href="#" class="project-link">
+                            <div class="project-thumbnail">
+                                <img src="{{ url_for('static', filename=project.featured_image) if project.featured_image else url_for('static', filename='images/default.jpg') }}" alt="{{ project.title }}">
+                            </div>
+                            <div class="project-info">
+                                <h3 class="project-title">{{ project.title }}</h3>
+                                <p class="project-author">By {{ project.username }}</p>
+                            </div>
+                            {% if project.tags %}
+                                    <div class="project__tags">
+                                        {% for tag in project.tags %}
+                                            <span class="tag-tag">{{ tag.name }}</span>
+                                        {% endfor %}
+                                    </div>
+                            {% endif %}
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+
+            {% else %}
+            <p>{% if query %}No projects found matching your search query.{% else %}No projects available yet.{% endif %}</p>
+            {% endif %}
+        </div>
+    </section>
+</div>
+{% endblock %}
+
